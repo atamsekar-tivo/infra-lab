@@ -1,5 +1,5 @@
 resource "null_resource" "label_workers" {
-  depends_on = [kind_cluster.default]
+  depends_on = [kind_cluster.cluster]
 
   triggers = {
     worker_count = var.worker_count
