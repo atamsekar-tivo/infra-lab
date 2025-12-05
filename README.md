@@ -31,8 +31,7 @@ Create a `main.tf` file in the `terraform/` directory with the following content
 ```hcl
 module "kind" {
   source = "./modules/kind"
-  # Add any required variables here, for example:
-  # cluster_name = "infra-lab"
+  cluster_name = "infra-lab"
 }
 ## Modules
 
