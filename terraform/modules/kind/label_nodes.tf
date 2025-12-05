@@ -8,15 +8,16 @@ resource "null_resource" "label_workers" {
 
   provisioner "local-exec" {
     command = <<EOF
-      # Wait for nodes to be ready (optional but good practice)
-      sleep 10
-      
-      # Label all worker nodes
-      # Kind naming: clustername-worker, clustername-worker2, ...
-      # We just label all nodes with role=worker (which Kind sets in labels usually? No, Kind sets node-role.kubernetes.io/control-plane on CP)
-      # We will label any node that is not a control plane
-      
-      kubectl --kubeconfig ${pathexpand("~/.kube/config")} get nodes --no-headers | grep -v "control-plane" | awk '{print $1}' | xargs -I {} kubectl --kubeconfig ${pathexpand("~/.kube/config")} label node {} node-role.kubernetes.io/worker=true --overwrite
+      kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} wait --for=condition=Ready node -l node-role.kubernetes.io/control-plane --timeout=60s
+
+      for i in {1..30}; do
+        NODES=$(kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} get nodes --no-headers | grep -v "control-plane" | awk '{print $1}')
+        if [ -n "$NODES" ]; then
+          echo "$NODES" | xargs -I {} kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} label node {} node-role.kubernetes.io/worker=true --overwrite
+          break
+        fi
+        sleep 2
+      done
     EOF
   }
 }

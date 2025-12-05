@@ -1,16 +1,8 @@
-terraform {
-  required_providers {
-    kind = {
-      source = "tehcyx/kind"
-    }
-  }
-}
-
 resource "kind_cluster" "default" {
   name            = var.cluster_name
   node_image      = var.node_image
   wait_for_ready  = true
-  kubeconfig_path = pathexpand("~/.kube/config")
+  kubeconfig_path = pathexpand(var.kubeconfig_path)
 
   kind_config {
     kind        = "Cluster"
