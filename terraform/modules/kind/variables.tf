@@ -25,10 +25,6 @@ variable "worker_count" {
     condition     = var.worker_count >= 0
     error_message = "worker_count must be a non-negative number."
   }
-  validation {
-    condition     = var.worker_count >= 0
-    error_message = "The worker_count must be at least 0."
-  }
 }
 
 variable "kubeconfig_path" {
