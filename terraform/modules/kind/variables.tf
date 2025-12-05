@@ -11,10 +11,6 @@ variable "node_image" {
     condition     = can(regex("^kindest/node:v[0-9]+\\.[0-9]+\\.[0-9]+(-[a-zA-Z0-9.-]+)?$", var.node_image))
     error_message = "The node_image must be in the format 'kindest/node:v<MAJOR>.<MINOR>.<PATCH>' (e.g., kindest/node:v1.27.3)."
   }
-  validation {
-    condition     = can(regex("^kindest/node:", var.node_image))
-    error_message = "The node_image must start with 'kindest/node:'."
-  }
 }
 
 variable "worker_count" {
