@@ -7,13 +7,16 @@ resource "null_resource" "label_workers" {
   }
 
   provisioner "local-exec" {
+    environment = {
+      KUBECONFIG = pathexpand(var.kubeconfig_path)
+    }
     command = <<EOF
-      kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} wait --for=condition=Ready node -l node-role.kubernetes.io/control-plane --timeout=60s
+      kubectl --kubeconfig "$KUBECONFIG" wait --for=condition=Ready node -l node-role.kubernetes.io/control-plane --timeout=60s
 
       for _ in {1..30}; do
-        NODES=$(kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} get nodes --no-headers | grep -v "control-plane" | awk '{print $1}')
+        NODES=$(kubectl --kubeconfig "$KUBECONFIG" get nodes --no-headers | grep -v "control-plane" | awk '{print $1}')
         if [ -n "$NODES" ]; then
-          echo "$NODES" | xargs -I {} kubectl --kubeconfig ${pathexpand(var.kubeconfig_path)} label node {} node-role.kubernetes.io/worker=true --overwrite
+          echo "$NODES" | xargs -I {} kubectl --kubeconfig "$KUBECONFIG" label node {} node-role.kubernetes.io/worker=true --overwrite
           exit 0
         fi
         sleep 2
