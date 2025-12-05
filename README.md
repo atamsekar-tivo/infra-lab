@@ -1,16 +1,30 @@
 # Infra Lab
 
-A sandbox environment for experimenting with DevOps practices, SRE methodologies, and Platform Engineering tools.
+A self-contained, optional, pluggable SRE/DevOps learning environment using Terraform + Kind.
 
-## Overview
+## Directory Structure
 
-This repository serves as a central hub for testing and validating platform engineering concepts, including:
-- Infrastructure-as-Code (Terraform, etc.)
-- Kubernetes & Helm
-- CI/CD Pipelines
-- Observability & Monitoring
+- `terraform/`: Infrastructure as Code definitions.
+  - `modules/`: Pluggable components (Kind, etc.).
+  - `main.tf`: Entry point for the infrastructure.
+- `apps/`: Sample applications for GitOps.
+- `scripts/`: Helper scripts.
 
-## License
+## Getting Started
 
-MIT
+1.  Navigate to `terraform/`:
+    ```bash
+    cd terraform
+    ```
+2.  Initialize Terraform:
+    ```bash
+    terraform init
+    ```
+3.  Apply the configuration to create the Kind cluster:
+    ```bash
+    terraform apply
+    ```
 
+## Modules
+
+- **Kind**: Creates a local Kubernetes cluster using Docker containers. Includes Ingress support.
