@@ -1,4 +1,4 @@
-resource "kind_cluster" "default" {
+resource "kind_cluster" "cluster" {
   name            = var.cluster_name
   node_image      = var.node_image
   wait_for_ready  = true
@@ -12,7 +12,12 @@ resource "kind_cluster" "default" {
       role = "control-plane"
 
       kubeadm_config_patches = [
-        "kind: InitConfiguration\nnodeRegistration:\n  kubeletExtraArgs:\n    node-labels: \"ingress-ready=true\"\n"
+        <<-EOT
+kind: InitConfiguration
+nodeRegistration:
+  kubeletExtraArgs:
+    node-labels: "ingress-ready=true"
+EOT
       ]
 
       extra_port_mappings {

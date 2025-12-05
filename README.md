@@ -6,9 +6,8 @@ A self-contained, optional, pluggable SRE/DevOps learning environment using Terr
 
 - `terraform/`: Infrastructure as Code definitions.
   - `modules/`: Pluggable components (Kind, etc.).
-  - `main.tf`: Entry point for the infrastructure.
-- `apps/`: Sample applications for GitOps.
-- `scripts/`: Helper scripts.
+  <!-- Entry point file (e.g., main.tf) not present; update as needed to reflect actual files. -->
+
 
 ## Getting Started
 
@@ -25,6 +24,16 @@ A self-contained, optional, pluggable SRE/DevOps learning environment using Terr
     terraform apply
     ```
 
+## Example Configuration
+
+Create a `main.tf` file in the `terraform/` directory with the following content to use the Kind module:
+
+```hcl
+module "kind" {
+  source = "./modules/kind"
+  # Add any required variables here, for example:
+  # cluster_name = "infra-lab"
+}
 ## Modules
 
 - **Kind**: Creates a local Kubernetes cluster using Docker containers. Includes Ingress support.
