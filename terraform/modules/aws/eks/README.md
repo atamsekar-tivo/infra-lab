@@ -55,13 +55,22 @@ module "eks" {
 
 ## Inputs
 
-| Name | Description | Type | Default |
-|------|-------------|------|---------|
-| `cluster_name` | Name of the EKS cluster | `string` | n/a |
-| `cluster_version` | Kubernetes version | `string` | `1.31` |
-| `create_vpc` | Create a new VPC | `bool` | `false` |
-| `node_groups` | Map of node group configurations | `map(object)` | `{}` |
-| `cluster_addons` | Map of addon configurations | `map(object)` | `{}` |
-| `enable_irsa` | Enable OIDC provider | `bool` | `true` |
-
-(See `variables.tf` for full list)
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| `cluster_name` | Name of the EKS cluster | `string` | n/a | yes |
+| `cluster_version` | Kubernetes version for the cluster | `string` | `"1.31"` | no |
+| `tags` | A map of tags to add to all resources | `map(string)` | `{}` | no |
+| `create_vpc` | Whether to create a new VPC for the cluster | `bool` | `false` | no |
+| `vpc_id` | ID of the existing VPC (required if create_vpc is false) | `string` | `null` | no |
+| `subnet_ids` | List of subnet IDs (required if create_vpc is false) | `list(string)` | `[]` | no |
+| `vpc_cidr` | CIDR block for the new VPC (if create_vpc is true) | `string` | `"10.0.0.0/16"` | no |
+| `public_subnets` | List of public subnet CIDRs for the new VPC | `list(string)` | `["10.0.101.0/24", ...]` | no |
+| `private_subnets` | List of private subnet CIDRs for the new VPC | `list(string)` | `["10.0.1.0/24", ...]` | no |
+| `enable_irsa` | Enable IRSA (IAM Roles for Service Accounts) | `bool` | `true` | no |
+| `cluster_endpoint_private_access` | Enable/disable private API server endpoint | `bool` | `true` | no |
+| `cluster_endpoint_public_access` | Enable/disable public API server endpoint | `bool` | `true` | no |
+| `cluster_endpoint_public_access_cidrs` | List of CIDRs which can access the public API server | `list(string)` | `["0.0.0.0/0"]` | no |
+| `cloudwatch_log_types` | List of control plane logging to enable | `list(string)` | `["api", "audit", ...]` | no |
+| `cloudwatch_log_retention_in_days` | Number of days to retain log events | `number` | `7` | no |
+| `node_groups` | Map of node group configurations | `map(object)` | `{}` | no |
+| `cluster_addons` | Map of cluster addon configurations | `map(object)` | `{}` | no |
