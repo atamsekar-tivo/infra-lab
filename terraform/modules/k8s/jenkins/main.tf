@@ -11,11 +11,13 @@ locals {
 }
 
 resource "helm_release" "jenkins" {
-  name       = "jenkins"
-  repository = "https://charts.jenkins.io"
-  chart      = "jenkins"
-  version    = var.helm_chart_version
-  namespace  = local.namespace
+  name             = "jenkins"
+  repository       = "https://charts.jenkins.io"
+  chart            = "jenkins"
+  version          = var.helm_chart_version
+  namespace        = local.namespace
+  create_namespace = false
+  depends_on = var.create_namespace ? [kubernetes_namespace_v1.this] : []
 
   # Set admin password securely
   dynamic "set" {
