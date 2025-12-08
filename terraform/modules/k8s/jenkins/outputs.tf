@@ -1,6 +1,6 @@
 output "namespace" {
   description = "The namespace where Jenkins was deployed"
-  value       = var.create_namespace ? kubernetes_namespace_v1.this[0].metadata[0].name : var.namespace
+  value       = local.namespace
 }
 
 output "release_name" {

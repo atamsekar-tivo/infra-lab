@@ -6,12 +6,16 @@ resource "kubernetes_namespace_v1" "this" {
   }
 }
 
+locals {
+  namespace = var.create_namespace ? kubernetes_namespace_v1.this[0].metadata[0].name : var.namespace
+}
+
 resource "helm_release" "jenkins" {
   name       = "jenkins"
   repository = "https://charts.jenkins.io"
   chart      = "jenkins"
   version    = var.helm_chart_version
-  namespace  = var.create_namespace ? kubernetes_namespace_v1.this[0].metadata[0].name : var.namespace
+  namespace  = local.namespace
 
   # Set admin password securely
   dynamic "set" {
