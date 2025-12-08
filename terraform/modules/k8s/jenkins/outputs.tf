@@ -15,7 +15,5 @@ output "jenkins_url" {
 
 output "admin_secret_name" {
   description = "The name of the Kubernetes secret containing the admin password"
-  value       = helm_release.jenkins.name # Standard chart behavior: secret name matches release name usually, or explicit.
-  # Actually, the chart usually creates 'jenkins' secret. Let's safeguard this.
-  # The output here is just informational. The robust way is to read the secret, but outputs should be simple.
+  value       = helm_release.jenkins.name
 }

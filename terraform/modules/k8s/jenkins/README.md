@@ -8,7 +8,7 @@ A production-ready Terraform module to deploy Jenkins on Kubernetes using the of
 - **Flexible Storage**: Configurable `storage_class` (supports Kind `standard` or EKS `gp3`).
 - **Ingress Support**: Optional Ingress resource generation.
 - **Secure Defaults**: Namespace isolation and secret management.
-- **Service Types**: specific ClusterIP, NodePort or LoadBalancer.
+- **Service Types**: Supports ClusterIP, NodePort or LoadBalancer.
 
 ## Usage
 
