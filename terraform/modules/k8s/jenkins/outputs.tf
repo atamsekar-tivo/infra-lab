@@ -9,7 +9,7 @@ output "release_name" {
 }
 
 output "jenkins_url" {
-  description = "The URL of the Jenkins instance (if Ingress is enabled; protocol is configurable via jenkins_url_protocol variable)"
+  description = "The URL of the Jenkins instance (if Ingress is enabled)"
   value       = var.ingress_enabled ? "${var.jenkins_url_protocol}://${var.ingress_host}" : null
 }
 
