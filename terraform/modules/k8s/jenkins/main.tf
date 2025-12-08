@@ -38,14 +38,20 @@ resource "helm_release" "jenkins" {
     value = var.ingress_enabled
   }
 
-  set {
-    name  = "controller.ingress.hostName"
-    value = var.ingress_host
+  dynamic "set" {
+    for_each = var.ingress_enabled ? [1] : []
+    content {
+      name  = "controller.ingress.hostName"
+      value = var.ingress_host
+    }
   }
 
-  set {
-    name  = "controller.ingress.ingressClassName"
-    value = var.ingress_class_name
+  dynamic "set" {
+    for_each = var.ingress_enabled ? [1] : []
+    content {
+      name  = "controller.ingress.ingressClassName"
+      value = var.ingress_class_name
+    }
   }
 
   # Persistence Configuration
