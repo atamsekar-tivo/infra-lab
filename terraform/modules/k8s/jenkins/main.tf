@@ -17,7 +17,7 @@ resource "helm_release" "jenkins" {
   version          = var.helm_chart_version
   namespace        = local.namespace
   create_namespace = false
-  depends_on = var.create_namespace ? [kubernetes_namespace_v1.this] : []
+  depends_on       = [kubernetes_namespace_v1.this]
 
   # Set admin password securely
   dynamic "set" {

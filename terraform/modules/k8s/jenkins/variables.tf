@@ -53,6 +53,16 @@ variable "ingress_class_name" {
   default     = "nginx"
 }
 
+variable "jenkins_url_protocol" {
+  description = "Protocol for Jenkins URL (http or https)"
+  type        = string
+  default     = "http"
+  validation {
+    condition     = contains(["http", "https"], var.jenkins_url_protocol)
+    error_message = "Protocol must be either 'http' or 'https'."
+  }
+}
+
 variable "service_type" {
   description = "Kubernetes Service type (ClusterIP, NodePort, LoadBalancer)"
   type        = string
