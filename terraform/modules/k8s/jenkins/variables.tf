@@ -57,6 +57,10 @@ variable "service_type" {
   description = "Kubernetes Service type (ClusterIP, NodePort, LoadBalancer)"
   type        = string
   default     = "ClusterIP"
+  validation {
+    condition     = contains(["ClusterIP", "NodePort", "LoadBalancer", "ExternalName"], var.service_type)
+    error_message = "Service type must be one of: ClusterIP, NodePort, LoadBalancer, or ExternalName."
+  }
 }
 
 variable "additional_set_values" {
