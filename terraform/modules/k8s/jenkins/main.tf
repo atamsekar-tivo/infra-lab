@@ -23,7 +23,7 @@ resource "helm_release" "jenkins" {
   dynamic "set" {
     for_each = var.admin_password != null ? [1] : []
     content {
-      name  = "controller.adminPassword"
+      name  = "controller.admin.password"
       value = var.admin_password
     }
   }
