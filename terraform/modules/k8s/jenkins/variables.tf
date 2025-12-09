@@ -13,7 +13,7 @@ variable "create_namespace" {
 variable "helm_chart_version" {
   description = "Version of the Jenkins Helm chart"
   type        = string
-  default     = "5.1.5" # Pin to specific version for stability
+  default     = "5.8.110" # Updated to latest version for plugin compatibility (Jenkins 2.528.2)
 }
 
 variable "admin_password" {
