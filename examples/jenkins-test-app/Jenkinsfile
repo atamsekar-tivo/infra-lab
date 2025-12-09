@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Running unit tests...'
                 dir('examples/jenkins-test-app') {
-                    sh 'python3 -m pytest test_app.py -v || python3 test_app.py'
+                    sh 'python3 test_app.py'
                 }
             }
         }
