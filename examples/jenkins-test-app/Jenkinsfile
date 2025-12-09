@@ -1,42 +1,59 @@
 pipeline {
     agent {
-        docker {
-            image 'python:3.11-slim'
-            args '-u root'
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: python
+    image: python:3.11-slim
+    command:
+    - cat
+    tty: true
+'''
         }
     }
     
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code...'
-                // Code is already checked out by Jenkins
-                sh 'ls -la'
+                container('python') {
+                    echo 'Checking out code...'
+                    // Code is already checked out by Jenkins
+                    sh 'ls -la'
+                }
             }
         }
         
         stage('Setup') {
             steps {
-                echo 'Setting up Python environment...'
-                sh 'python3 --version'
-                sh 'which python3'
+                container('python') {
+                    echo 'Setting up Python environment...'
+                    sh 'python3 --version'
+                    sh 'which python3'
+                }
             }
         }
         
         stage('Run Tests') {
             steps {
-                echo 'Running unit tests...'
-                dir('examples/jenkins-test-app') {
-                    sh 'python3 test_app.py'
+                container('python') {
+                    echo 'Running unit tests...'
+                    dir('examples/jenkins-test-app') {
+                        sh 'python3 test_app.py'
+                    }
                 }
             }
         }
         
         stage('Run Application') {
             steps {
-                echo 'Running the application...'
-                dir('examples/jenkins-test-app') {
-                    sh 'python3 app.py'
+                container('python') {
+                    echo 'Running the application...'
+                    dir('examples/jenkins-test-app') {
+                        sh 'python3 app.py'
+                    }
                 }
             }
         }
