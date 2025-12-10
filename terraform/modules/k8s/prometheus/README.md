@@ -58,7 +58,7 @@ module "prometheus" {
   storage_class = "gp3"
 
   # Prometheus Configuration
-  retention_days         = "30d"
+  retention_period       = "30d"
   prometheus_volume_size = "50Gi"
 
   # Prometheus Ingress
@@ -90,7 +90,7 @@ module "prometheus" {
   service_type           = "LoadBalancer"
 
   # Prometheus settings
-  retention_days         = "90d"
+  retention_period       = "90d"
   prometheus_volume_size = "100Gi"
 
   # Custom Helm values
@@ -116,6 +116,11 @@ module "prometheus" {
 kubectl port-forward -n monitoring svc/kube-prometheus-stack-prometheus 9090:9090
 # Access at http://localhost:9090
 ```
+
+> **Note**: If port-forwarding doesn't work, try specifying the port name:
+> ```bash
+> kubectl port-forward -n monitoring svc/kube-prometheus-stack-prometheus 9090:http-web
+> ```
 
 **Grafana:**
 ```bash
@@ -153,7 +158,7 @@ The stack automatically collects metrics from:
 | `namespace` | Kubernetes namespace | `string` | `"monitoring"` | no |
 | `create_namespace` | Create the namespace | `bool` | `true` | no |
 | `helm_chart_version` | kube-prometheus-stack Chart Version | `string` | `"67.4.0"` | no |
-| `retention_days` | Metrics retention period | `string` | `"15d"` | no |
+| `retention_period` | Metrics retention period | `string` | `"15d"` | no |
 | `storage_class` | Storage Class Name | `string` | `"standard"` | no |
 | `prometheus_volume_size` | Prometheus PVC size | `string` | `"10Gi"` | no |
 | `service_type` | K8s Service Type | `string` | `"ClusterIP"` | no |

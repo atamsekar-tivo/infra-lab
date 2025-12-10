@@ -17,8 +17,8 @@ variable "helm_chart_version" {
 }
 
 # Prometheus Configuration
-variable "retention_days" {
-  description = "Number of days to retain metrics"
+variable "retention_period" {
+  description = "Retention period for metrics (e.g., 15d, 30d, 90d)"
   type        = string
   default     = "15d"
 }

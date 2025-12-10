@@ -10,30 +10,30 @@ output "helm_release_name" {
 
 output "prometheus_service_name" {
   description = "Name of the Prometheus service"
-  value       = "kube-prometheus-stack-prometheus"
+  value       = "${helm_release.prometheus.name}-prometheus"
 }
 
 output "prometheus_url" {
   description = "Internal URL to access Prometheus"
-  value       = "http://kube-prometheus-stack-prometheus.${local.namespace}.svc.cluster.local:9090"
+  value       = "http://${helm_release.prometheus.name}-prometheus.${local.namespace}.svc.cluster.local:9090"
 }
 
 output "grafana_service_name" {
   description = "Name of the Grafana service (if enabled)"
-  value       = var.grafana_enabled ? "kube-prometheus-stack-grafana" : null
+  value       = var.grafana_enabled ? "${helm_release.prometheus.name}-grafana" : null
 }
 
 output "grafana_url" {
   description = "Internal URL to access Grafana (if enabled)"
-  value       = var.grafana_enabled ? "http://kube-prometheus-stack-grafana.${local.namespace}.svc.cluster.local:80" : null
+  value       = var.grafana_enabled ? "http://${helm_release.prometheus.name}-grafana.${local.namespace}.svc.cluster.local:80" : null
 }
 
 output "alertmanager_service_name" {
   description = "Name of the Alertmanager service (if enabled)"
-  value       = var.alertmanager_enabled ? "kube-prometheus-stack-alertmanager" : null
+  value       = var.alertmanager_enabled ? "${helm_release.prometheus.name}-alertmanager" : null
 }
 
 output "alertmanager_url" {
   description = "Internal URL to access Alertmanager (if enabled)"
-  value       = var.alertmanager_enabled ? "http://kube-prometheus-stack-alertmanager.${local.namespace}.svc.cluster.local:9093" : null
+  value       = var.alertmanager_enabled ? "http://${helm_release.prometheus.name}-alertmanager.${local.namespace}.svc.cluster.local:9093" : null
 }

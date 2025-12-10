@@ -22,7 +22,7 @@ resource "helm_release" "prometheus" {
   # Prometheus Configuration
   set {
     name  = "prometheus.prometheusSpec.retention"
-    value = var.retention_days
+    value = var.retention_period
   }
 
   set {
@@ -68,7 +68,7 @@ resource "helm_release" "prometheus" {
     value = var.grafana_enabled
   }
 
-  dynamic "set" {
+  dynamic "set_sensitive" {
     for_each = var.grafana_enabled && var.grafana_admin_password != null ? [1] : []
     content {
       name  = "grafana.adminPassword"
